@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, getCurrentInstance } from "vue";
 import Graph from "@/components/Graph.vue";
 import CompanySearch from "@/components/CompanySearch.vue";
+const context = getCurrentInstance()?.appContext.config.globalProperties;
+const api_url = context?.$api_url;
 defineOptions({
   // name 作为一种规范最好必须写上并且和路由的name保持一致
   name: "relationship_graph"
@@ -20,7 +22,7 @@ const node = ref({
 });
 
 function getname(name: string) {
-  const url = `http://127.0.0.1:5000/getnodebyname?name=${name}`;
+  const url = api_url + `getnodebyname?name=${name}`;
   fetch(url)
     .then(response => response.json())
     .then(data => {

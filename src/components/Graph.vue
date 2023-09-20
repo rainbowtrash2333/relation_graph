@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, toRefs, watch } from "vue";
+import { reactive, ref, toRefs, watch, getCurrentInstance } from "vue";
 import * as vNG from "v-network-graph";
 import {
   ForceLayout
@@ -18,8 +18,10 @@ const props = withDefaults(
   }
 );
 const { name } = toRefs(props);
+const context = getCurrentInstance()?.appContext.config.globalProperties;
+const api_url = context?.$api_url;
 // const edges = ref(null);
-fetch("http://127.0.0.1:5000/getghbyname?name=" + name.value)
+fetch(api_url + "getghbyname?name=" + name.value)
   .then(response => response.json())
   .then(data => {
     mynodes.value = data.nodes;
@@ -116,7 +118,7 @@ const configs = reactive(
 
 const callback = (newVal: any, oldVal: any) => {
   console.log(newVal, oldVal);
-  fetch("http://127.0.0.1:5000/getghbyname?name=" + name.value)
+  fetch(api_url + "getghbyname?name=" + name.value)
     .then(response => response.json())
     .then(data => {
       mynodes.value = data.nodes;

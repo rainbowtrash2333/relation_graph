@@ -26,6 +26,7 @@ import "./assets/iconfont/iconfont.js";
 import "./assets/iconfont/iconfont.css";
 
 const app = createApp(App);
+app.config.globalProperties.$api_url = "http://127.0.0.1:5000/";
 app.use(VNetworkGraph);
 // 自定义指令
 import * as directives from "@/directives";
